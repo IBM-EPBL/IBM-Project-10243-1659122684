@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IBM URL Similarity</title>
+  </head>
+  <body>
+    <input type="text" id="url" />
+    <button onclick="oncl()">Check URL Similarity</button>
+  </body>
+  <script>
+    function parse(row) {
+      var insideQuote = false,
+        entries = [],
+        entry = [];
+      row.split("").forEach(function (character) {
+        if (character === '"') {
+          insideQuote = !insideQuote;
+        } else {
+          if (character == "," && !insideQuote) {
+            entries.push(entry.join(""));
+            entry = [];
+          } else {
+            entry.push(character);
+          }
+        }
+      });
+      entries.push(entry.join(""));
+      return entries;
+    }
+    function checkUrl(url) {
+      lines = allText.split("\n");
+      dataLines = lines.slice(1);
+      data = dataLines.map(parse);
+      let legitimate = [],
+        phising = [];
+
+      for (let x of data) {
+        if (x[1] == "legitimate") {
+          legitimate.push(x[0]);
+        } else {
+          phising.push(x[0]);
+        }
+      }
+      for (let x of phising) {
+        if (similarity(x, url) > 0.7) {
+          console.log(x);
+          console.log(similarity(x, url));
+          alert(
+            "It is a Phising URL, It is Similar to " +
+              x +
+              " , which is found in the dataset"
+          );
+          return;
+        }
+      }
+      for (let x of legitimate) {
+        if (similarity(x, url) > 0.7) {
+          console.log(x);
+          console.log(similarity(x, url));
+          alert(
+            "It is a Legitimate URL, It is Similar to " +
+              x +
+              " , which is found in the dataset"
+          );
+          return;
+        }
+      }
+      alert("Similar Web URLs are not found in the dataset.");
+    }
+    var rawFile = new XMLHttpRequest();
+    let file = "dataset_phishing.csv";
+    var allText = "";
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function () {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status == 0) {
+          allText = rawFile.responseText;
+        }
+      }
+    };
+    rawFile.send(null);
+    function editDistance(s1, s2) {
+      s1 = s1.toLowerCase();
+      s2 = s2.toLowerCase();
+
+      var costs = new Array();
+      for (var i = 0; i <= s1.length; i++) {
+        var lastValue = i;
+        for (var j = 0; j <= s2.length; j++) {
+          if (i == 0) costs[j] = j;
+          else {
+            if (j > 0) {
+              var newValue = costs[j - 1];
+              if (s1.charAt(i - 1) != s2.charAt(j - 1))
+                newValue =
+                  Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+              costs[j - 1] = lastValue;
+              lastValue = newValue;
+            }
+          }
+        }
+        if (i > 0) costs[s2.length] = lastValue;
+      }
+      return costs[s2.length];
+    }
+    function similarity(s1, s2) {
+      var longer = s1;
+      var shorter = s2;
+      if (s1.length < s2.length) {
+        longer = s2;
+        shorter = s1;
+      }
+      var longerLength = longer.length;
+      if (longerLength == 0) {
+        return 1.0;
+      }
+      return (
+        (longerLength - editDistance(longer, shorter)) /
+        parseFloat(longerLength)
+      );
+    }
+
+    function oncl() {
+      checkUrl(document.getElementById("url").value);
+    }
+  </script>
+</html>
