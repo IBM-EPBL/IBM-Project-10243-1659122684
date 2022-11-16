@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IBM Sprint 1</title>
+  </head>
+  <body>
+    <h1>Phising Website Detector</h1>
+    <input type="text" id="url" />
+    <button onclick="check()" class="">Predict</button>
+  </body>
+  <script>
+    function check() {
+      let input_txt = document.getElementById("url").value;
+      var res = input_txt.match(
+        /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+      );
+      console.log(res);
+      if (res !== null) {
+        alert("It is a Valid URL!");
+      } else {
+        alert("It is NOT a Valid URL!");
+      }
+    }
+  </script>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IBM Blacklist-Whitelist</title>
+  </head>
+  <body>
+    <input type="text" id="url" />
+    <button onclick="oncl()">Check URL</button>
+  </body>
+  <script>
+    function parse(row) {
+      var insideQuote = false,
+        entries = [],
+        entry = [];
+      row.split("").forEach(function (character) {
+        if (character === '"') {
+          insideQuote = !insideQuote;
+        } else {
+          if (character == "," && !insideQuote) {
+            entries.push(entry.join(""));
+            entry = [];
+          } else {
+            entry.push(character);
+          }
+        }
+      });
+      entries.push(entry.join(""));
+      return entries;
+    }
+    function checkUrl(url) {
+      lines = allText.split("\n");
+      dataLines = lines.slice(1);
+      data = dataLines.map(parse);
+      let legitimate = [],
+        phising = [];
+
+      for (let x of data) {
+        if (x[1] == "legitimate") {
+          legitimate.push(x[0]);
+        } else {
+          phising.push(x[0]);
+        }
+      }
+      for (let x of phising) {
+        if (x === url) {
+          alert("It is a Phising URL");
+          return;
+        }
+      }
+      for (let x of legitimate) {
+        if (x === url) {
+          alert("It is a Legitimate URL");
+          return;
+        }
+      }
+      alert("Web URL not in blacklist/whitelist");
+    }
+    var rawFile = new XMLHttpRequest();
+    let file = "dataset_phishing.csv";
+    var allText = "";
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function () {
+      if (rawFile.readyState === 4) {
+        if (rawFile.status === 200 || rawFile.status == 0) {
+          allText = rawFile.responseText;
+        }
+      }
+    };
+    rawFile.send(null);
+    function oncl() {
+      checkUrl(document.getElementById("url").value);
+    }
+  </script>
+</html>
