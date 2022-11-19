@@ -1,5 +1,3 @@
-# IBM-Project-10243-1659122684
-
 <h1 align="center">Nalaiya Thiran 2022 project implementation - Web Phishing Detection using Machine Learning</h1>
 <br/>
 <h3 align="center">
