@@ -13,7 +13,7 @@ Team Leader: <br>
 Shri Krishnaa VN - 917719D092<br>
 <br>
 Team Members: <br>
-Shankar Mahadevan G 917719D087 <br>
+Shankar Mahadevan G - 917719D087 <br>
 Sanjeev K - 917719D077 <br>
 Siddharthan S - 917719D093 <br>
 Manivel Prakash - 917719D124 <br>
