@@ -5,12 +5,12 @@
 
 Team ID: PNT2022TMID21424
 
-Team Leader: Shri Krishnaa VN
-Team Members:
-Shankar Mahadevan G
-Sanjeev K
-Siddharthan S
-Manivel Prakash
+Team Leader: Shri Krishnaa VN <br>
+Team Members: <br>
+Shankar Mahadevan G <br>
+Sanjeev K <br>
+Siddharthan S <br>
+Manivel Prakash <br>
 
 Steps to run:
 1. cd into Source Code folder
