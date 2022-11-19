@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 import inputScript
 import requests
 
-API_KEY = "ZmkStuyI4oDkJ4iirb0YquWZaV0_MngDySw5q4uiA7e5"
+API_KEY = ""
 
 
 def get_prediction_ibm(values):
