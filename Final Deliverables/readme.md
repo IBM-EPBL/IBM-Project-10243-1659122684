@@ -1,4 +1,4 @@
-<h1 align="center">Source code of our Nalaiya Thiran project implementation - Web Phising Detection using Machine Learning</h1>
+<h1 align="center">Source code of our Nalaiya Thiran project implementation - Web Phishing Detection using Machine Learning</h1>
 <br/>
 <h3 align="center">Uses a ML model hosted in IBM Cloud for inference - Enter API key to test</h3>
 
